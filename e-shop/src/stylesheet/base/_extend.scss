@@ -1,0 +1,14 @@
+%boder-transparent {
+  border: 1px solid transparent;
+}
+
+%background-image_default {
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+%absolute-fit {
+  position: absolute;
+  inset: 0;
+}
