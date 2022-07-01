@@ -51,6 +51,12 @@ $banner-height: 800px;
       @include flex-centered;
       flex-shrink: 0;
       background-color: #fff3df;
+      
+      img {
+        width: 17px;
+        height: 17px;
+        object-fit: unset;
+      }
     }
   }
 
