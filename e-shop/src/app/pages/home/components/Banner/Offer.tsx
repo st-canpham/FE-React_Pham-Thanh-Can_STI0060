@@ -1,4 +1,10 @@
-const Offer = ({title, desc, icon}: any) => {
+interface offer {
+  title: string,
+  desc: string,
+  icon: string
+}
+
+const Offer: React.FC<offer> = ({title, desc, icon}) => {
   return (
     <div className="media media-sm">
         <span className="media-img offer-icon">

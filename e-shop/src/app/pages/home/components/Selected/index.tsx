@@ -9,7 +9,7 @@ const Selected = () => {
           <h3 className="section-title">Selected just for you</h3>
           <button className="btn btn-outline-secondary">SHOW MORE</button>
         </div>
-        <ProductList data={productData}/>
+        <ProductList productList={productData}/>
       </div>
     </section>
   )
