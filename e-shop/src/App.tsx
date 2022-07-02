@@ -9,11 +9,8 @@ import Cart from './app/pages/cart';
 import keyList from './app/shared/constants/keyList';
 import { setStorage, getStorage } from './app/shared/helper/data';
 import productData from './app/shared/constants/product-data';
-import { ICartItem, ICartList } from './app/shared/interfaces/cart-interface';
 
 function App() {
-  
-  
   useEffect(() => {
     setStorage('product-list', productData);
     // cartList = getStorage(keyList.cartList) || {};

@@ -1,8 +1,7 @@
-export interface ICartItem {
+interface ICartItem {
   id: number;
+  price: number;
   quantity: number;
 }
 
-export interface ICartList {
-  [key: string | number]: ICartItem;
-};
+export default ICartItem;

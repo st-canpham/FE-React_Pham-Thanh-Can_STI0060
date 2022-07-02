@@ -1,7 +1,7 @@
-import { useEffect } from 'react';
 import keyList from '../constants/keyList';
 import { setStorage, getStorage } from '../helper/data';
-import { ICartItem, ICartList } from '../interfaces/cart-interface';
+import ICartItem from '../interfaces/cart-interface';
+import { calcDiscountPrice, convertToFixed } from '../common';
 
 interface Product {
   thumbnail: string,
@@ -12,18 +12,20 @@ interface Product {
 };
 
 const Product: React.FC<Product> = ({thumbnail, price, name, discount, id}) => {
+  const discountPrice = convertToFixed(calcDiscountPrice(price, discount), 2);
   const addToCart = (productId: number) => {
     const cartList = getStorage(keyList.cartList) || [];
     const cartItem: ICartItem = cartList.find((item: ICartItem) => item.id === productId);
-    if (!cartItem) {
+    if (cartItem) {
+      cartItem.quantity += 1;
+    }
+    else {
       const value = {
         id,
+        price: (+discountPrice || price),
         quantity: 1
       }
       cartList.push(value);
-    }
-    else {
-      cartItem.quantity += 1;
     }
     setStorage(keyList.cartList, cartList);
   };
@@ -33,11 +35,11 @@ const Product: React.FC<Product> = ({thumbnail, price, name, discount, id}) => {
       <div className="product-img">
         <img src={thumbnail} alt={name} />
       </div>
-      {discount !== 0 && <span className="badge badge-primary badge-top-left">{`${discount * 100}%`}</span>}
+      {discount > 0 && <span className="badge badge-primary badge-top-left">{`${discount * 100}%`}</span>}
       <div className="product-info">
         <h4 className="product-name">{name}</h4>
         <div className="product-price">
-          {discount !== 0 && <p className="price-discount">{price - discount * price}</p>}
+          {discount > 0 && <p className="price-discount">{discountPrice}</p>}
           <p className="price-current">{price}</p>
         </div>
       </div>

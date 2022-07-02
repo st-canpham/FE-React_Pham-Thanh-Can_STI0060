@@ -1,7 +1,8 @@
-import productData from '../../../../shared/constants/product-data';
 import ProductList from '../../../../shared/components/ProductlList';
+import IProduct from '../../../../shared/interfaces/product-interface';
 
-const Selected = () => {
+const Selected = (props: any) => {
+  const productData: IProduct[] = props.productData;
   return (
     <section className="section-for-you page-section">
       <div className="container">
