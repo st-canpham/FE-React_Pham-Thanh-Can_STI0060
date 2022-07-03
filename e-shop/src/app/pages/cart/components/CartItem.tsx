@@ -1,9 +1,10 @@
-import { useEffect, useState } from 'react';
+import React, {useEffect, useState, useContext} from 'react';
+import {CartContext} from '../../../shared/context/CartContext';
 import ICartItem from '../../../shared/interfaces/cart-interface';
 import IProduct from '../../../shared/interfaces/product-interface';
-import { getStorage, setStorage } from '../../../shared/helper/data';
+import {setStorage} from '../../../shared/helper/data';
 import keyList from '../../../shared/constants/keyList';
-import { convertToFixed, getProductById } from '../../../shared/common';
+import {convertToFixed, getProductById} from '../../../shared/common';
 
 interface CartItem {
   id: number;
@@ -13,15 +14,17 @@ interface CartItem {
 };
 
 const CartItem: React.FC<CartItem> = ({id, quantity, price, setCartList}) => {
-  const [cartItem, setCartItem] = useState<IProduct>();
+  const cartContext = useContext(CartContext);
+  const {updateQuantityCart}: any = cartContext;
+  const [productItem, setProductItem] = useState<IProduct>();
   useEffect(() => {
     const item = getProductById(id);
     if(item) {
-      setCartItem(item);
+      setProductItem(item);
     } 
   }, []);
 
-  const updateCartItem = (id: number, value: number) => {
+  const cartItem = (id: number, value: number) => {
     setCartList((prevCartList: ICartItem[]) => {
       const nextCartList = [...prevCartList];
       const index = nextCartList.findIndex(item => item.id === id);
@@ -30,6 +33,7 @@ const CartItem: React.FC<CartItem> = ({id, quantity, price, setCartList}) => {
         removeCartItem(id);
       }
       setStorage(keyList.cartList, nextCartList);
+      updateQuantityCart(value);
       return nextCartList;
     })
   };
@@ -40,43 +44,44 @@ const CartItem: React.FC<CartItem> = ({id, quantity, price, setCartList}) => {
       const index = nextCartList.findIndex(item => item.id === id);
       nextCartList.splice(index, 1);
       setStorage(keyList.cartList, nextCartList);
+      updateQuantityCart(-quantity);
       return nextCartList;
     })
   };
   
-  if(cartItem) {
+  if(productItem) {
     return (
       <>
         <div className="cart-item-left">
         <div className="cart-img">
-          <img src={cartItem.thumbnail} alt={cartItem.name} />
+          <img src={productItem.thumbnail} alt={productItem.name} />
         </div>
-        {cartItem.discount > 0 && <div className="badge badge-primary">{`${cartItem.discount*100}%`} </div>}
+        {productItem.discount > 0 && <div className="badge badge-primary">{`${productItem.discount*100}%`} </div>}
         <div className="cart-info">
           <div className="cart-info-top">
-            <h4 className="cart-name">{cartItem.name}</h4>
+            <h4 className="cart-name">{productItem.name}</h4>
             <div className="cart-price">
-              {cartItem.discount > 0 && <p className="price-discount">{price}</p>}
-              <p className="price-current">{cartItem.price}</p>
+              {productItem.discount > 0 && <p className="price-discount">{price}</p>}
+              <p className="price-current">{productItem.price}</p>
             </div>
           </div>
           <p className="cart-total-item">Total: 
-            <span> {convertToFixed((price || cartItem.price)*quantity, 2)}</span>
+            <span> {convertToFixed((price || productItem.price)*quantity, 2)}</span>
           </p>
         </div>
       </div>
       <div className="cart-option">
         <div className="quantity">
-          <button onClick={() => {updateCartItem(id, -1)}}>-</button>
+          <button onClick={() => {cartItem(id, -1)}}>-</button>
           <input type="number" disabled min="0" value={quantity}/>
-          <button onClick={() => {updateCartItem(id, 1)}}>+</button>
+          <button onClick={() => {cartItem(id, 1)}}>+</button>
         </div>
         <button className="btn remove-btn" onClick={() => {removeCartItem(id)}}>Remove</button>
       </div>
       </>
     )
   }
-  return null;
+  return <></>;
 };
 
 export default CartItem;

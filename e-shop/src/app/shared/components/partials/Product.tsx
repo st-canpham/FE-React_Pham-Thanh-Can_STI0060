@@ -1,7 +1,9 @@
-import keyList from '../constants/keyList';
-import { setStorage, getStorage } from '../helper/data';
-import ICartItem from '../interfaces/cart-interface';
-import { calcDiscountPrice, convertToFixed } from '../common';
+import React, {useContext} from 'react';
+import {CartContext, ICartContext} from '../../context/CartContext';
+import keyList from '../../constants/keyList';
+import {setStorage, getStorage} from '../../helper/data';
+import ICartItem from '../../interfaces/cart-interface';
+import {calcDiscountPrice, convertToFixed} from '../../common';
 
 interface Product {
   thumbnail: string,
@@ -12,6 +14,8 @@ interface Product {
 };
 
 const Product: React.FC<Product> = ({thumbnail, price, name, discount, id}) => {
+  const cartContext = useContext(CartContext);
+  const {totalQuantity, updateQuantityCart}: any = cartContext;
   const discountPrice = convertToFixed(calcDiscountPrice(price, discount), 2);
   const addToCart = (productId: number) => {
     const cartList = getStorage(keyList.cartList) || [];
@@ -28,6 +32,7 @@ const Product: React.FC<Product> = ({thumbnail, price, name, discount, id}) => {
       cartList.push(value);
     }
     setStorage(keyList.cartList, cartList);
+    updateQuantityCart(1);
   };
 
   return (
@@ -43,7 +48,7 @@ const Product: React.FC<Product> = ({thumbnail, price, name, discount, id}) => {
           <p className="price-current">{price}</p>
         </div>
       </div>
-      <button 
+      <button
         onClick={() => addToCart(id)}
         className="btn btn-primary product-btn"
       >Add to cart

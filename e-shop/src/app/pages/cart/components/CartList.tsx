@@ -1,6 +1,7 @@
+import React from 'react';
 import CartItem from './CartItem';
 import ICartItem from '../../../shared/interfaces/cart-interface';
-import { convertToFixed } from '../../../shared/common';
+import {convertToFixed} from '../../../shared/common';
 interface CartList {
   cartList: ICartItem[];
   setCartList: any;

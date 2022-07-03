@@ -1,7 +1,11 @@
+import React, {useContext} from 'react';
+import {CartContext, ICartContext} from '../../context/CartContext';
 import { Link } from 'react-router-dom';
 import Icon from '../../../assets/icons';
 
-const Header = () => {
+const Header: React.FC= () => {
+  const cartContext = useContext(CartContext);
+  let quantityCart = cartContext?.quantityCart;
   return (
     <header>
       <div className="container">
@@ -58,7 +62,7 @@ const Header = () => {
                   />
                 </svg>
               </Link>
-              <span className="action-quantity js-quantity-cart">0</span>
+              <span className="action-quantity">{quantityCart}</span>
             </li>
             <li className="action-item">
               <button className="btn btn-icon-sm">
