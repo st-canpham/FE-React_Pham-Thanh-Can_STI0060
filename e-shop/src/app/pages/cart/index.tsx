@@ -6,7 +6,6 @@ import CartList from './components/CartList';
 const Cart: React.FC = () => {
   const cartContext = useContext(CartContext);
   const {cart} = cartContext;
-  console.log('load')
   return (
     <main>
       <section className="cart">

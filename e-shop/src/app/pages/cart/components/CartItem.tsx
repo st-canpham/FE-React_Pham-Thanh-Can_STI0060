@@ -23,7 +23,7 @@ const CartItem: React.FC<CartItem> = ({id, quantity, price}) => {
     } 
   }, []);
 
-  const cartItem = (id: number, value: number) => {
+  const updateQuantityCartItem = (id: number, value: number) => {
     setCart((prevCartList: ICartItem[]) => {
       const newCartList = [...prevCartList];
       const index = newCartList.findIndex(item => item.id === id);
@@ -72,9 +72,9 @@ const CartItem: React.FC<CartItem> = ({id, quantity, price}) => {
         </div>
         <div className="cart-option">
           <div className="quantity">
-            <button onClick={() => {cartItem(id, -1)}}>-</button>
+            <button onClick={() => {updateQuantityCartItem(id, -1)}}>-</button>
             <input type="number" disabled min="0" value={quantity}/>
-            <button onClick={() => {cartItem(id, 1)}}>+</button>
+            <button onClick={() => {updateQuantityCartItem(id, 1)}}>+</button>
           </div>
           <button className="btn remove-btn" onClick={() => {removeCartItem(id)}}>Remove</button>
         </div>
