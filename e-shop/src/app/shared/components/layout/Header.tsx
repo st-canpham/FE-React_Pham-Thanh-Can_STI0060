@@ -1,11 +1,11 @@
 import React, {useContext} from 'react';
-import {CartContext, ICartContext} from '../../context/CartContext';
+import {CartContext} from '../../context/CartContext';
 import { Link } from 'react-router-dom';
 import Icon from '../../../assets/icons';
 
 const Header: React.FC= () => {
   const cartContext = useContext(CartContext);
-  let quantityCart = cartContext?.quantityCart;
+  const {quantityCart} = cartContext;
   return (
     <header>
       <div className="container">
@@ -143,6 +143,6 @@ const Header: React.FC= () => {
       </div>
     </header>
   )
-}
+};
 
 export default Header;

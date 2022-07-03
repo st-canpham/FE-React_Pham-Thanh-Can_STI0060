@@ -1,24 +1,18 @@
-import { useState, useEffect, useRef } from 'react';
-import keyList from '../../shared/constants/keyList';
-import { setStorage, getStorage } from '../../shared/helper/data';
+import React, {useContext} from 'react';
+import {CartContext} from '../../shared/context/CartContext';
 import CartEmpty from './components/CartEmpty';
 import CartList from './components/CartList';
-import ICartItem from '../../shared/interfaces/cart-interface';
 
-const Cart = () => {
-  const [cartList, setCartList] = useState<ICartItem[]>([]);
-  useEffect(() => {
-    const cartData: ICartItem[] = getStorage(keyList.cartList);
-    if(cartData) {
-      setCartList(cartData);
-    }
-  }, []);
+const Cart: React.FC = () => {
+  const cartContext = useContext(CartContext);
+  const {cart} = cartContext;
+  console.log('load')
   return (
     <main>
       <section className="cart">
         <div className="container">
-          {cartList.length === 0 && <CartEmpty />}
-          {cartList.length > 0 && <CartList cartList={cartList} setCartList={setCartList}/>}
+          {cart.length === 0 && <CartEmpty />}
+          {cart.length > 0 && <CartList />}
         </div>
       </section>
     </main>

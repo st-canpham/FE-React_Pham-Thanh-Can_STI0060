@@ -171,6 +171,6 @@ const Footer: React.FC = () => {
       <p className="footer-copyright">DESIGN BY ICEO.CO - © 2019. ALL RIGHTS RESERVED.</p>
     </footer>
   )
-}
+};
 
 export default Footer;
