@@ -5,7 +5,7 @@ import {setStorage, getStorage} from '../../helper/data';
 import ICartItem from '../../interfaces/cart-interface';
 import {calcDiscountPrice, convertToFixed} from '../../common';
 
-interface Product {
+interface Props {
   thumbnail: string,
   price: number,
   name: string,
@@ -13,9 +13,9 @@ interface Product {
   id: number
 };
 
-const Product: React.FC<Product> = ({thumbnail, price, name, discount, id}) => {
+const Product: React.FC<Props> = ({thumbnail, price, name, discount, id}) => {
   const cartContext = useContext(CartContext);
-  const {updateQuantityCart, setCart} = cartContext;
+  const {setQuantityCart, setCart} = cartContext;
   const discountPrice = convertToFixed(calcDiscountPrice(price, discount), 2);
   const addToCart = (productId: number) => {
     const cartList = getStorage(keyList.cartList) || [];
@@ -32,7 +32,7 @@ const Product: React.FC<Product> = ({thumbnail, price, name, discount, id}) => {
       cartList.push(value);
     }
     setStorage(keyList.cartList, cartList);
-    updateQuantityCart(1);
+    setQuantityCart(quantityPrev => quantityPrev + 1);
     setCart(cartList);
   };
 

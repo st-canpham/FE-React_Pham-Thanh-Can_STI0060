@@ -5,7 +5,7 @@ import keyList from '../constants/keyList';
 
 interface ICartContext {
   quantityCart: number;
-  updateQuantityCart: (value: number) => void;
+  setQuantityCart: React.Dispatch<React.SetStateAction<number>>;
   cart: ICartItem[];
   setCart: React.Dispatch<React.SetStateAction<ICartItem[]>>
 };
@@ -13,7 +13,7 @@ interface ICartContext {
 const CartContext = createContext<ICartContext>(
   {
     quantityCart: 0,
-    updateQuantityCart: () => {},
+    setQuantityCart: () => {},
     cart: [],
     setCart: () => {}
   }
@@ -34,13 +34,10 @@ const CartProvider: React.FC<Props> = ({children}) => {
     setQuantityCart(total);
     setCart(cartData);
   }, []);
-  const updateQuantityCart = (value: number) => {
-    setQuantityCart(quantityCart + value);
-  };
 
   const value: ICartContext = {
     quantityCart,
-    updateQuantityCart,
+    setQuantityCart,
     cart,
     setCart
   };

@@ -10,8 +10,7 @@ const Cart: React.FC = () => {
     <main>
       <section className="cart">
         <div className="container">
-          {cart.length === 0 && <CartEmpty />}
-          {cart.length > 0 && <CartList />}
+          {cart.length === 0 ? <CartEmpty /> : <CartList />}
         </div>
       </section>
     </main>
