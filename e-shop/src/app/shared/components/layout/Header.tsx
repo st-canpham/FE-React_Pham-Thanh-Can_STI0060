@@ -46,9 +46,9 @@ const Header: React.FC= () => {
               <span className="action-quantity">{quantityCart}</span>
             </li>
             <li className="action-item">
-              <button className="btn btn-icon-sm">
+              <Link to='/Register' className="btn btn-icon-sm">
                 <UserIcon />
-              </button>
+              </Link>
             </li>
           </ul>
           <ul className="actions-list actions-list-mobile">
