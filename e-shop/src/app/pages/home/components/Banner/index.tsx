@@ -1,7 +1,8 @@
+import React from 'react';
 import OfferList from './OfferList';
 import offerData from '../../../../shared/constants/offer-data';
 
-const Banner = () => {
+const Banner: React.FC = () => {
   return (
     <section className="section-banner page-section">
       <div className="container">

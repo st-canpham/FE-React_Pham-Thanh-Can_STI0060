@@ -1,9 +1,10 @@
-import React, {useContext} from 'react';
-import {CartContext} from '../../context/CartContext';
+import React from 'react';
+import { useCartContext } from '../../context/globalContext';
 import keyList from '../../constants/keyList';
-import {setStorage, getStorage} from '../../helper/data';
+import { setStorage } from '../../helper/data';
 import ICartItem from '../../interfaces/cart-interface';
-import {calcDiscountPrice, convertToFixed} from '../../common';
+import { calcDiscountPrice, convertToFixed } from '../../common';
+import Button from '../../components/partials/Button';
 
 interface Props {
   thumbnail: string,
@@ -14,12 +15,11 @@ interface Props {
 };
 
 const Product: React.FC<Props> = ({thumbnail, price, name, discount, id}) => {
-  const cartContext = useContext(CartContext);
-  const {setQuantityCart, setCart} = cartContext;
+  const {cart, setCart} = useCartContext();
   const discountPrice = convertToFixed(calcDiscountPrice(price, discount), 2);
-  const addToCart = (productId: number) => {
-    const cartList = getStorage(keyList.cartList) || [];
-    const cartItem: ICartItem = cartList.find((item: ICartItem) => item.id === productId);
+  const addToCart = () => {
+    const cartNew = [...cart];
+    const cartItem = cartNew.find((item: ICartItem) => item.id === id);
     if (cartItem) {
       cartItem.quantity += 1;
     }
@@ -29,11 +29,10 @@ const Product: React.FC<Props> = ({thumbnail, price, name, discount, id}) => {
         price: (+discountPrice || price),
         quantity: 1
       }
-      cartList.push(value);
+      cartNew.push(value);
     }
-    setStorage(keyList.cartList, cartList);
-    setQuantityCart(quantityPrev => quantityPrev + 1);
-    setCart(cartList);
+    setStorage(keyList.cartList, cartNew);
+    setCart(cartNew);
   };
 
   return (
@@ -49,11 +48,11 @@ const Product: React.FC<Props> = ({thumbnail, price, name, discount, id}) => {
           <p className="price-current">{price}</p>
         </div>
       </div>
-      <button
-        onClick={() => addToCart(id)}
+      <Button
+        onClick={() => addToCart()}
         className="btn btn-primary product-btn"
       >Add to cart
-      </button>
+      </Button>
     </div>  
   )
 };

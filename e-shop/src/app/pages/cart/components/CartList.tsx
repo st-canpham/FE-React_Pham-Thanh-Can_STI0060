@@ -1,12 +1,12 @@
-import React, {useContext} from 'react';
-import {CartContext} from '../../../shared/context/CartContext';
+import React from 'react';
+import { useCartContext } from '../../../shared/context/globalContext';
 import CartItem from './CartItem';
 import ICartItem from '../../../shared/interfaces/cart-interface';
 import {convertToFixed} from '../../../shared/common';
+import Button from '../../../shared/components/partials/Button';
 
 const CartList: React.FC = () => {
-  const cartContext = useContext(CartContext);
-  const {cart} = cartContext;
+  const {cart} = useCartContext();
 
   const total = cart.reduce((total, item: ICartItem) => {
     return total + item.price*item.quantity;
@@ -14,13 +14,9 @@ const CartList: React.FC = () => {
 
   const renderCart = () => {
     return (
-      cart.map(item => (
+      cart.map((item, index) => (
         <li className="cart-item" key={item.id}>
-          <CartItem 
-            id={item.id} 
-            price={item.price}
-            quantity={item.quantity}
-          />
+          <CartItem {...item} index={index}/>
         </li>
       ))
     )
@@ -33,7 +29,7 @@ const CartList: React.FC = () => {
       </ul>
       <div className="cart-total col-5">
         <p>TOTAL: <span>{convertToFixed(total, 2)}</span></p>
-        <button className="btn btn-primary">PAY</button>
+        <Button className="btn btn-primary">PAY</Button>
       </div>
     </div>
   )

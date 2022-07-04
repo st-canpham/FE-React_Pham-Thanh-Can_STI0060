@@ -1,46 +1,44 @@
-import React, {useContext} from 'react';
-import {CartContext} from '../../../shared/context/CartContext';
-import {setStorage} from '../../../shared/helper/data';
+import React from 'react';
+import { useCartContext } from '../../../shared/context/globalContext';
+import { setStorage } from '../../../shared/helper/data';
 import keyList from '../../../shared/constants/keyList';
-import {convertToFixed, getProductById} from '../../../shared/common';
+import { convertToFixed, getProductById } from '../../../shared/common';
+import Button from '../../../shared/components/partials/Button';
 
 interface Props {
   id: number;
   price: number;
   quantity: number;
+  index: number;
 };
 
-const CartItem: React.FC<Props> = ({id, quantity, price}) => {
-  const cartContext = useContext(CartContext);
-  const {setQuantityCart, setCart} = cartContext;
+const CartItem: React.FC<Props> = ({id, quantity, price, index}) => {
+  const {setCart} = useCartContext();
   const productItem = getProductById(id);
 
-  const updateCartItem = (id: number, value: number) => {
+  const updateCartItem = (value: number) => {
     setCart(cartPrev => {
       const cartNew = [...cartPrev];
-      const index = cartNew.findIndex(cartItem => cartItem.id === id);
-      cartNew[index].quantity += value;
-      if(cartNew[index].quantity <= 0) {
-        removeCartItem(id, 0);
+      const cartItem = cartNew[index];
+      cartItem.quantity += value;
+      if (cartItem.quantity <= 0) {
+        removeCartItem();
       }
       setStorage(keyList.cartList, cartNew);
-      setQuantityCart(quantityPrev => quantityPrev + value);
       return cartNew;
     })
   };
 
-  const removeCartItem = (id: number, quantityCurrent: number) => {
+  const removeCartItem = () => {
     setCart(cartPrev => {
       const cartNew = [...cartPrev];
-      const index = cartNew.findIndex(cartItem => cartItem.id === id);
       cartNew.splice(index, 1);
       setStorage(keyList.cartList, cartNew);
-      setQuantityCart(quantityPrev => quantityPrev - quantityCurrent);
       return cartNew;
     })
   };
   
-  if(productItem) {
+  if (productItem) {
     return (
       <>
         <div className="cart-item-left">
@@ -63,11 +61,11 @@ const CartItem: React.FC<Props> = ({id, quantity, price}) => {
         </div>
         <div className="cart-option">
           <div className="quantity">
-            <button onClick={() => {updateCartItem(id, -1)}}>-</button>
+            <Button onClick={() => updateCartItem(-1)}>-</Button>
             <input type="number" disabled min="0" value={quantity}/>
-            <button onClick={() => {updateCartItem(id, +1)}}>+</button>
+            <Button onClick={() => updateCartItem(1)}>+</Button>
           </div>
-          <button className="btn remove-btn" onClick={() => removeCartItem(id, quantity)} >Remove</button>
+          <Button className="btn remove-btn" onClick={removeCartItem}>Remove</Button>
         </div>
       </>
     )
