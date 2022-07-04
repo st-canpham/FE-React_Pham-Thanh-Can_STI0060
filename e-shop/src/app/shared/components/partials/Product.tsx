@@ -1,5 +1,5 @@
 import React from 'react';
-import { useCartContext } from '../../context/globalContext';
+import useGlobalContext from '../../context';
 import keyList from '../../constants/keyList';
 import { setStorage } from '../../helper/data';
 import ICartItem from '../../interfaces/cart-interface';
@@ -15,7 +15,7 @@ interface Props {
 };
 
 const Product: React.FC<Props> = ({thumbnail, price, name, discount, id}) => {
-  const {cart, setCart} = useCartContext();
+  const {cart, setCart} = useGlobalContext();
   const discountPrice = convertToFixed(calcDiscountPrice(price, discount), 2);
   const addToCart = () => {
     const cartNew = [...cart];

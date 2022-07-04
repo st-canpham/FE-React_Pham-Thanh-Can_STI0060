@@ -1,5 +1,5 @@
 import React from 'react';
-import { useCartContext } from '../../../shared/context/globalContext';
+import useGlobalContext from '../../../shared/context';
 import { setStorage } from '../../../shared/helper/data';
 import keyList from '../../../shared/constants/keyList';
 import { convertToFixed, getProductById } from '../../../shared/common';
@@ -13,7 +13,7 @@ interface Props {
 };
 
 const CartItem: React.FC<Props> = ({id, quantity, price, index}) => {
-  const {setCart} = useCartContext();
+  const {setCart} = useGlobalContext();
   const productItem = getProductById(id);
 
   const updateCartItem = (value: number) => {

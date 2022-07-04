@@ -1,6 +1,10 @@
 import React, { useState, useRef } from 'react';
-const Register: React.FC = () => {
+import { useNavigate } from 'react-router-dom';
+import useGlobalContext from '../../shared/context';
 
+const Register: React.FC = () => {
+  const navigate = useNavigate();
+  const {setUser} = useGlobalContext();
   const [state, setState] = useState({
     email: '',
     password: '',
@@ -23,7 +27,8 @@ const Register: React.FC = () => {
       rePasswordInput.current && rePasswordInput.current.classList.add('invalid');
     } 
     else {
-      e.currentTarget.submit();
+      setUser(state.email);
+      navigate('/');
     }
   };
 
@@ -39,7 +44,7 @@ const Register: React.FC = () => {
   return (
     <div className="container">
       <div className="register">
-        <form action="/" className="form-register" onSubmit={(e) => hanldeSubmit(e)}>
+        <form className="form-register" onSubmit={(e) => hanldeSubmit(e)}>
           <input 
             className="form-control" 
             type="text" 
