@@ -1,6 +1,9 @@
 import Icon from '../../assets/icons';
+import IOffer from '../interfaces/offer-interface';
 
-const offerData = [
+export type OfferList = IOffer[];
+
+const offerData: OfferList = [
   {
     id: 1,
     icon: Icon.Shipping,

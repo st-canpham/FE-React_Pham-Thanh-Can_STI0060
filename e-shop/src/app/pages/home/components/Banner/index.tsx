@@ -1,8 +1,8 @@
+import React from 'react';
 import OfferList from './OfferList';
 import offerData from '../../../../shared/constants/offer-data';
-import {ReactComponent as HappyIcon} from '../../../../assets/icons/happy.svg';
 
-const Banner = () => {
+const Banner: React.FC = () => {
   return (
     <section className="section-banner page-section">
       <div className="container">
@@ -30,7 +30,7 @@ const Banner = () => {
               <span className="banner-link-text">SHOP NOW</span>
             </a>
           </div>
-          <OfferList data={offerData}/>
+          <OfferList offerlist={offerData}/>
         </div>
       </div>
     </section>

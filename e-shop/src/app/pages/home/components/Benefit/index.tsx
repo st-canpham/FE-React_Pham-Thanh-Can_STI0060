@@ -1,4 +1,6 @@
-const Benefit = () => {
+import React from 'react';
+
+const Benefit: React.FC = () => {
   return (
     <section className="section-benefits page-section">
       <div className="container">

@@ -1,6 +1,7 @@
+import React from 'react';
 import Images from '../../../../assets/images';
 
-const Category = () => {
+const Category: React.FC = () => {
   return (
     <section className="section-category page-section">
       <div className="container">
@@ -13,7 +14,7 @@ const Category = () => {
 
               <div className="category-content">
                 <h4 className="category-title">New arrivalsare now in!</h4>
-                <a className="btn btn-secondary" href="">SHOW COLLECTION</a>
+                <a className="btn btn-secondary" href="/">SHOW COLLECTION</a>
               </div>
             </div>
           </li>
@@ -27,7 +28,7 @@ const Category = () => {
                   Basic t-shirts <br />
                   $29,99
                 </h4>
-                <a className="btn btn-secondary" href="">MORE DETAILS</a>
+                <a className="btn btn-secondary" href="/">MORE DETAILS</a>
               </div>
             </div>
           </li>
@@ -42,7 +43,7 @@ const Category = () => {
                   Sale this <br />
                   summer
                 </h4>
-                <a className="btn btn-secondary" href="">VIEW ALL</a>
+                <a className="btn btn-secondary" href="/">VIEW ALL</a>
               </div>
             </div>
           </li>

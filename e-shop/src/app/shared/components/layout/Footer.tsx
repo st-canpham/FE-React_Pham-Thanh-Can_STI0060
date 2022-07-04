@@ -1,4 +1,6 @@
-const Footer = () => {
+import React from 'react';
+
+const Footer: React.FC = () => {
   return (
     <footer>
       <div className="container">
@@ -169,6 +171,6 @@ const Footer = () => {
       <p className="footer-copyright">DESIGN BY ICEO.CO - © 2019. ALL RIGHTS RESERVED.</p>
     </footer>
   )
-}
+};
 
 export default Footer;

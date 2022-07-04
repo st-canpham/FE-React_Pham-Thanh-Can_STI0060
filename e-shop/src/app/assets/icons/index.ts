@@ -4,6 +4,7 @@ import User from './user.svg';
 import Shipping from './shipping.svg';
 import Happy from './happy.svg';
 import Guarantee from './guarantee.svg';
+import Logo from './logo.svg';
 
 const Icon = {
   Search,
@@ -11,7 +12,8 @@ const Icon = {
   User,
   Shipping,
   Happy,
-  Guarantee
+  Guarantee,
+  Logo
 };
 
 export default Icon;
