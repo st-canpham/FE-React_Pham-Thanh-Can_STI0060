@@ -8,11 +8,11 @@ const Register: React.FC = () => {
   const [state, setState] = useState({
     email: '',
     password: '',
-    rePassword: '',
+    passwordConfirm: '',
   });
   const emailInput = useRef<HTMLInputElement>(null);
   const passwordInput = useRef<HTMLInputElement>(null);
-  const rePasswordInput = useRef<HTMLInputElement>(null);
+  const passwortConfirmInput = useRef<HTMLInputElement>(null);
 
   const hanldeSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -26,8 +26,8 @@ const Register: React.FC = () => {
       passwordInput.current?.classList.add('invalid');
       flag = false;
     }
-    if(state.password !== state.rePassword) {
-      rePasswordInput.current?.classList.add('invalid');
+    if(state.password !== state.passwordConfirm) {
+      passwortConfirmInput.current?.classList.add('invalid');
       flag = false; 
     } 
     if(flag) {
@@ -67,9 +67,9 @@ const Register: React.FC = () => {
             className="form-control" 
             type="password" 
             placeholder="Retype password"
-            name="rePassword"
-            value={state.rePassword}
-            ref={rePasswordInput}
+            name="passwordConfirm"
+            value={state.passwordConfirm}
+            ref={passwortConfirmInput}
             onChange={(e) => handleChangeInput(e)}
           />
           <button className="btn btn-primary btn-register" type="submit">SUBMIT</button>
