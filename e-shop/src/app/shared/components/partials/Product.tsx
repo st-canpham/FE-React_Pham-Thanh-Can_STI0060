@@ -1,7 +1,5 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import keyList from '../../constants/keyList';
-import { setStorage } from '../../helper/data';
 import ICartItem from '../../interfaces/cart-interface';
 import { calcDiscountPrice, convertToFixed } from '../../common';
 import Button from '../../components/partials/Button';

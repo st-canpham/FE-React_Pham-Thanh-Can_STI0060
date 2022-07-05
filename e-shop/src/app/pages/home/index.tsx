@@ -1,18 +1,12 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import Banner from './components/banner';
 import Category from './components/categories';
 import SectionProducts from './components/section-products';
 import Benefit from './components/benefit';
 import Subcribe from './components/subcribe';
-import keyList from '../../shared/constants/keyList';
-import {getStorage} from '../../shared/helper/data';
-import IProduct from '../../shared/interfaces/product-interface';
+import productList from '../../shared/constants/product-data';
 
 const Home: React.FC = () => {
-  const [productList, setProductList] = useState<IProduct[]>([]);
-  useEffect(() => {
-    setProductList(getStorage(keyList.productList) || []);
-  }, [])
   return (
     <main>
       <Banner />

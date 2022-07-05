@@ -1,6 +1,6 @@
 import * as TYPES from '../../shared/constants/types';
 import ICartItem from '../../shared/interfaces/cart-interface';
-import keyList from '../../shared/constants/keyList';
+import { storageKeys } from '../../shared/constants/storage-keys';
 import { setStorage, getStorage } from '../../shared/helper/data';
 
 interface initState {
@@ -13,7 +13,7 @@ interface interfaceAction {
 };
 
 const initState: initState = {
-  cart: getStorage(keyList.cartList) || [],
+  cart: getStorage(storageKeys.cartList) || [],
 };
 
 const cartReducer = (state = initState, action: interfaceAction) => {
@@ -32,7 +32,7 @@ const cartReducer = (state = initState, action: interfaceAction) => {
       const cartNew = [...state.cart];
       const index = cartNew.findIndex(cartItem => cartItem.id === action.payload);
       cartNew[index].quantity += 1;
-      setStorage(keyList.cartList, cartNew);
+      setStorage(storageKeys.cartList, cartNew);
       return {
         ...state,
         cart: [...cartNew]
@@ -45,7 +45,7 @@ const cartReducer = (state = initState, action: interfaceAction) => {
       if(cartNew[index].quantity <= 0) {
         cartNew.splice(index, 1);
       }
-      setStorage(keyList.cartList, cartNew);
+      setStorage(storageKeys.cartList, cartNew);
       return {
         ...state,
         cart: [...cartNew]
@@ -55,7 +55,7 @@ const cartReducer = (state = initState, action: interfaceAction) => {
       const cartNew = [...state.cart];
       const index = cartNew.findIndex(cartItem => cartItem.id === action.payload);
       cartNew.splice(index, 1);
-      setStorage(keyList.cartList, cartNew);
+      setStorage(storageKeys.cartList, cartNew);
       return {
         ...state,
         cart: [...cartNew]

@@ -1,6 +1,4 @@
-import { getStorage } from '../helper/data';
-import keyList from '../constants/keyList';
-import IProduct from '../interfaces/product-interface';
+import productList from '../../shared/constants/product-data';
 
 export const calcDiscountPrice = (initialPrice: number, discount: number) => {
   return initialPrice - initialPrice * discount;
@@ -11,7 +9,6 @@ export const convertToFixed = (value: number, numberFixed: number) => {
 };
 
 export const getProductById = (id: number) => {
-  const productList: IProduct[] = getStorage(keyList.productList) || [];
   const productItem = productList.find(item => item.id === id);
   return productItem;
 };
