@@ -8,7 +8,7 @@ const Register: React.FC = () => {
   const [state, setState] = useState({
     email: '',
     password: '',
-    rePassword: ''
+    rePassword: '',
   });
   const emailInput = useRef<HTMLInputElement>(null);
   const passwordInput = useRef<HTMLInputElement>(null);
@@ -16,29 +16,29 @@ const Register: React.FC = () => {
 
   const hanldeSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    let flag = true;
     const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
     if(!emailRegex.test(state.email)) {
-      emailInput.current && emailInput.current.classList.add('invalid');
+      emailInput.current?.classList.add('invalid');
+      flag = false;
     }
-    else if(state.password.length < 8) {
-      passwordInput.current && passwordInput.current.classList.add('invalid');
+    if(state.password.length < 8) {
+      passwordInput.current?.classList.add('invalid');
+      flag = false;
     }
-    else if(state.password !== state.rePassword) {
-      rePasswordInput.current && rePasswordInput.current.classList.add('invalid');
+    if(state.password !== state.rePassword) {
+      rePasswordInput.current?.classList.add('invalid');
+      flag = false; 
     } 
-    else {
+    if(flag) {
       setUser(state.email);
       navigate('/');
     }
   };
 
-  const handleChangeInput = (
-    e: React.ChangeEvent<HTMLInputElement>, 
-    inputElement: React.RefObject<HTMLInputElement>, 
-    stateChange: string
-  ) => {
-    inputElement.current && inputElement.current.classList.remove('invalid');
-    setState({...state, [stateChange]: e.target.value});
+  const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.target.classList.remove('invalid');
+    setState({...state, [e.target.name]: e.target.value});
   }
 
   return (
@@ -49,25 +49,28 @@ const Register: React.FC = () => {
             className="form-control" 
             type="text" 
             placeholder="Email" 
+            name="email"
             value={state.email}
-            onChange={(e) => handleChangeInput(e, emailInput, 'email')}
+            onChange={(e) => handleChangeInput(e)}
             ref={emailInput}
           />
           <input 
             className="form-control" 
             type="password" 
             placeholder="Password"
+            name="password"
             value={state.password}
-            onChange={(e) => handleChangeInput(e, passwordInput, 'password')}
+            onChange={(e) => handleChangeInput(e)}
             ref={passwordInput}
           />
           <input 
             className="form-control" 
             type="password" 
             placeholder="Retype password"
+            name="rePassword"
             value={state.rePassword}
             ref={rePasswordInput}
-            onChange={(e) => handleChangeInput(e, rePasswordInput, 'rePassword')}
+            onChange={(e) => handleChangeInput(e)}
           />
           <button className="btn btn-primary btn-register" type="submit">SUBMIT</button>
         </form>
