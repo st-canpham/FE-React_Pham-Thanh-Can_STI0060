@@ -1,12 +1,12 @@
 import React from 'react';
-import { useCartContext } from '../../../shared/context/globalContext';
+import useGlobalContext from '../../../shared/context';
 import CartItem from './CartItem';
 import ICartItem from '../../../shared/interfaces/cart-interface';
 import {convertToFixed} from '../../../shared/common';
 import Button from '../../../shared/components/partials/Button';
 
 const CartList: React.FC = () => {
-  const {cart} = useCartContext();
+  const {cart} = useGlobalContext();
 
   const total = cart.reduce((total, item: ICartItem) => {
     return total + item.price*item.quantity;

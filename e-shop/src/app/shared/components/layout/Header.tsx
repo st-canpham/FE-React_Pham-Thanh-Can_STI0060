@@ -1,15 +1,13 @@
-import React, {useContext} from 'react';
-import {CartContext} from '../../context/CartContext';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import Icon from '../../../assets/icons';
+import useGlobalContext from '../../context';
 import {ReactComponent as LogoIcon} from '../../../assets/icons/logo.svg';
 import {ReactComponent as SearchIcon} from '../../../assets/icons/search.svg';
 import {ReactComponent as CartIcon} from '../../../assets/icons/cart.svg';
 import {ReactComponent as UserIcon} from '../../../assets/icons/user.svg';
 
 const Header: React.FC= () => {
-  const cartContext = useContext(CartContext);
-  const {cart} = cartContext;
+  const {cart, user} = useGlobalContext();
   const quantityCart = cart.reduce((total, item) => total + item.quantity, 0);
   return (
     <header>
@@ -23,16 +21,17 @@ const Header: React.FC= () => {
           <nav>
             <ul className="nav-list">
               <li className="nav-item">
-                <a className="nav-link" href="">Men</a>
+                <a className="nav-link" href="/">Men</a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="">Women</a>
+                <a className="nav-link" href="/">Women</a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="">Kids</a>
+                <a className="nav-link" href="/">Kids</a>
               </li>
             </ul>
           </nav>
+          {user && <span style={{color: 'red'}}>{user}</span>}
           <ul className="actions-list">
             <li className="action-item">
               <button className="btn btn-icon-sm">

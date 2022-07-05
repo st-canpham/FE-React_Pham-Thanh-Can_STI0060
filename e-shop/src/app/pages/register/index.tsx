@@ -1,15 +1,45 @@
 import React, { useState, useRef } from 'react';
-import Button from '../../shared/components/partials/Button';
-const Register: React.FC = () => {
+import { useNavigate } from 'react-router-dom';
+import useGlobalContext from '../../shared/context';
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const emailInput = useRef(null);
+const Register: React.FC = () => {
+  const navigate = useNavigate();
+  const {setUser} = useGlobalContext();
+  const [state, setState] = useState({
+    email: '',
+    password: '',
+    passwordConfirm: '',
+  });
+  const emailInput = useRef<HTMLInputElement>(null);
+  const passwordInput = useRef<HTMLInputElement>(null);
+  const passwortConfirmInput = useRef<HTMLInputElement>(null);
 
   const hanldeSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    let flag = true;
     const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+    if(!emailRegex.test(state.email)) {
+      emailInput.current?.classList.add('invalid');
+      flag = false;
+    }
+    if(state.password.length < 8) {
+      passwordInput.current?.classList.add('invalid');
+      flag = false;
+    }
+    if(state.password !== state.passwordConfirm) {
+      passwortConfirmInput.current?.classList.add('invalid');
+      flag = false; 
+    } 
+    if(flag) {
+      setUser(state.email);
+      navigate('/');
+    }
   };
+
+  const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.target.classList.remove('invalid');
+    setState({...state, [e.target.name]: e.target.value});
+  }
 
   return (
     <div className="container">
@@ -19,18 +49,29 @@ const Register: React.FC = () => {
             className="form-control" 
             type="text" 
             placeholder="Email" 
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            name="email"
+            value={state.email}
+            onChange={(e) => handleChangeInput(e)}
             ref={emailInput}
           />
           <input 
             className="form-control" 
             type="password" 
             placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            name="password"
+            value={state.password}
+            onChange={(e) => handleChangeInput(e)}
+            ref={passwordInput}
           />
-          <input className="form-control" type="password" placeholder="Retype password"/>
+          <input 
+            className="form-control" 
+            type="password" 
+            placeholder="Retype password"
+            name="passwordConfirm"
+            value={state.passwordConfirm}
+            ref={passwortConfirmInput}
+            onChange={(e) => handleChangeInput(e)}
+          />
           <button className="btn btn-primary btn-register" type="submit">SUBMIT</button>
         </form>
       </div>
