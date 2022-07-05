@@ -1,10 +1,11 @@
 import React from 'react';
-import useGlobalContext from '../../shared/context';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store';
 import CartEmpty from './components/CartEmpty';
 import CartList from './components/CartList';
 
 const Cart: React.FC = () => {
-  const {cart} = useGlobalContext ();
+  const { cart } = useSelector((state: RootState) => state.cart)
   return (
     <main>
       <section className="cart">

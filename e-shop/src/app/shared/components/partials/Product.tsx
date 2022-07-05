@@ -1,11 +1,13 @@
 import React from 'react';
-import useGlobalContext from '../../context';
+import { useDispatch, useSelector } from 'react-redux';
 import keyList from '../../constants/keyList';
 import { setStorage } from '../../helper/data';
 import ICartItem from '../../interfaces/cart-interface';
 import { calcDiscountPrice, convertToFixed } from '../../common';
 import Button from '../../components/partials/Button';
-
+import { addCart, updateInscreaseCart } from '../../../pages/cart/cart.actions';
+import { RootState } from '../../../store';
+ 
 interface Props {
   thumbnail: string,
   price: number,
@@ -15,13 +17,14 @@ interface Props {
 };
 
 const Product: React.FC<Props> = ({thumbnail, price, name, discount, id}) => {
-  const {cart, setCart} = useGlobalContext();
+  const dispatch = useDispatch();
+  const { cart } = useSelector((state: RootState) => state.cart);
   const discountPrice = convertToFixed(calcDiscountPrice(price, discount), 2);
   const addToCart = () => {
     const cartNew = [...cart];
     const cartItem = cartNew.find((item: ICartItem) => item.id === id);
     if (cartItem) {
-      cartItem.quantity += 1;
+      dispatch(updateInscreaseCart(id));
     }
     else {
       const value = {
@@ -29,10 +32,8 @@ const Product: React.FC<Props> = ({thumbnail, price, name, discount, id}) => {
         price: (+discountPrice || price),
         quantity: 1
       }
-      cartNew.push(value);
+      dispatch(addCart(value));
     }
-    setStorage(keyList.cartList, cartNew);
-    setCart(cartNew);
   };
 
   return (
@@ -49,7 +50,7 @@ const Product: React.FC<Props> = ({thumbnail, price, name, discount, id}) => {
         </div>
       </div>
       <Button
-        onClick={() => addToCart()}
+        onClick={addToCart}
         className="btn btn-primary product-btn"
       >Add to cart
       </Button>

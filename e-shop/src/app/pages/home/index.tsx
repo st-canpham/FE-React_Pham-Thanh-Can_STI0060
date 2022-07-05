@@ -11,7 +11,7 @@ import IProduct from '../../shared/interfaces/product-interface';
 const Home: React.FC = () => {
   const [productList, setProductList] = useState<IProduct[]>([]);
   useEffect(() => {
-    setProductList(getStorage(keyList.productList));
+    setProductList(getStorage(keyList.productList) || []);
   }, [])
   return (
     <main>

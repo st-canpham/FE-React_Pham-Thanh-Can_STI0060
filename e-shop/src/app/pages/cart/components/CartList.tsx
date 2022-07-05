@@ -1,13 +1,13 @@
 import React from 'react';
-import useGlobalContext from '../../../shared/context';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../store';
 import CartItem from './CartItem';
 import ICartItem from '../../../shared/interfaces/cart-interface';
-import {convertToFixed} from '../../../shared/common';
+import { convertToFixed } from '../../../shared/common';
 import Button from '../../../shared/components/partials/Button';
 
 const CartList: React.FC = () => {
-  const {cart} = useGlobalContext();
-
+  const { cart } = useSelector((state: RootState) => state.cart);
   const total = cart.reduce((total, item: ICartItem) => {
     return total + item.price*item.quantity;
   }, 0);
