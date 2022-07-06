@@ -1,13 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import Banner from './components/banner';
 import Category from './components/categories';
 import SectionProducts from './components/section-products';
 import Benefit from './components/benefit';
 import Subcribe from './components/subcribe';
-import productList from '../../shared/constants/product-data';
+import LoadingSpinner from '../../shared/components/partials/LoadingSpinner';
+import { RootState } from '../../store';
 
 const Home: React.FC = () => {
-  return (
+  const { isLoading, productList } = useSelector((state: RootState) => state.product);
+  useEffect(() => {
+    window.scroll(0, 0);
+  });
+
+  return isLoading ? (<LoadingSpinner />) : (
     <main>
       <Banner />
       <Category />

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { convertToFixed, getProductById } from '../../../shared/common';
 import Button from '../../../shared/components/partials/Button';
 import { RootState } from '../../../store';
@@ -14,8 +14,8 @@ interface Props {
 
 const CartItem: React.FC<Props> = ({id, quantity, price, index}) => {
   const dispatch = useDispatch();
-  const productItem = getProductById(id);
-  const { cart } = useSelector((state: RootState) => state.cart)
+  const { productList } = useSelector((state: RootState) => state.product);
+  const productItem = getProductById(id, productList);
   const updateQuantityCartItem = (action: string) => {
     switch(action) {
       case 'inscrease': dispatch(updateInscreaseCart(id)); break;
@@ -33,9 +33,9 @@ const CartItem: React.FC<Props> = ({id, quantity, price, index}) => {
       <>
         <div className="cart-item-left">
           <div className="cart-img">
-            <img src={productItem.thumbnail} alt={productItem.name} />
+            <img src={productItem.image} alt={productItem.name} />
           </div>
-          {productItem.discount > 0 && <div className="badge badge-primary">{`${productItem.discount*100}%`} </div>}
+          {productItem.discount > 0 && <div className="badge badge-primary">{`${productItem.discount}%`} </div>}
           <div className="cart-info">
             <div className="cart-info-top">
               <h4 className="cart-name">{productItem.name}</h4>

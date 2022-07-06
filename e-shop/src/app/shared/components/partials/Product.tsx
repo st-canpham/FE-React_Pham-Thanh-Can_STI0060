@@ -7,14 +7,14 @@ import { addCart, updateInscreaseCart } from '../../../pages/cart/cart.actions';
 import { RootState } from '../../../store';
  
 interface Props {
-  thumbnail: string,
+  image: string,
   price: number,
   name: string,
   discount: number,
   id: number
 };
 
-const Product: React.FC<Props> = ({thumbnail, price, name, discount, id}) => {
+const Product: React.FC<Props> = ({image, price, name, discount, id}) => {
   const dispatch = useDispatch();
   const { cart } = useSelector((state: RootState) => state.cart);
   const discountPrice = convertToFixed(calcDiscountPrice(price, discount), 2);
@@ -37,9 +37,9 @@ const Product: React.FC<Props> = ({thumbnail, price, name, discount, id}) => {
   return (
     <div className="product">
       <div className="product-img">
-        <img src={thumbnail} alt={name} />
+        <img src={image} alt={name} />
       </div>
-      {discount > 0 && <span className="badge badge-primary badge-top-left">{`${discount * 100}%`}</span>}
+      {discount > 0 && <span className="badge badge-primary badge-top-left">{`${discount}%`}</span>}
       <div className="product-info">
         <h4 className="product-name">{name}</h4>
         <div className="product-price">
