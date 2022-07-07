@@ -8,16 +8,14 @@ interface IInitState {
   productList: IProduct[];
   categories: ICategory[];
   isLoading: boolean;
-  error: string;
-  categoriesChecked: string[];
+  error: string
 };
 
 const initState: IInitState = {
   productList: [],
   categories: [],
   isLoading: false,
-  error: "",
-  categoriesChecked: []
+  error: ""
 };
 
 const homeReducer = (state = initState, action: IAction) => {
@@ -64,12 +62,6 @@ const homeReducer = (state = initState, action: IAction) => {
         error: action.payload
       }
     }
-    
-    case TYPES.FILTER_PRODUCT: 
-      return {
-        ...state,
-        categoriesChecked: action.payload
-      }
 
     default: return state;
   }

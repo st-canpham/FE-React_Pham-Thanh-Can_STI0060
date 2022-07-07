@@ -9,11 +9,7 @@ import LoadingSpinner from '../../shared/components/partials/LoadingSpinner';
 import { RootState } from '../../app.store';
 
 const Home: React.FC = () => {
-  const { isLoading, productList, categories, categoriesChecked } = useSelector((state: RootState) => state.home);
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [isLoading]);
+  const { isLoading, productList, categories } = useSelector((state: RootState) => state.home);
 
   return isLoading ? (<LoadingSpinner />) : (
     <main>
@@ -21,7 +17,6 @@ const Home: React.FC = () => {
       <Category />
       <SectionProducts 
         productData={productList} 
-        categoriesChecked={categoriesChecked}
         title="Selected just for you"
         action="SHOW MORE"
       />

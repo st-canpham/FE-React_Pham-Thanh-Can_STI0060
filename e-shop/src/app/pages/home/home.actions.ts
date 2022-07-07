@@ -39,10 +39,3 @@ export const getCategoriesFailed = (data: any) => {
     payload: data
   }
 };
-
-export const filterProduct = (categories: number[]) => {
-  return {
-    type: TYPES.FILTER_PRODUCT,
-    payload: categories
-  }
-};
