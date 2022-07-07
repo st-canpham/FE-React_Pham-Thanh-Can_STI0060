@@ -7,7 +7,7 @@ interface Props {
   productData: IProduct[];
   title: string;
   action?: string;
-  categoriesChecked?: string[];
+  categoriesChecked?: number[];
 };
 
 const SectionProducts: React.FC<Props> = ({productData, title, action, categoriesChecked}) => {

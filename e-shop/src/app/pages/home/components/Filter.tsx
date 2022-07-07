@@ -12,12 +12,12 @@ const Filter: React.FC<Props> = ({ categories }) => {
   const location = useLocation();
   const dispatch = useDispatch();
   const [path, setPath] = useState(location.pathname);
-  const [checked, setChecked] = useState<string[]>([]);
+  const [checked, setChecked] = useState<number[]>([]);
   useEffect(() => {
     dispatch(filterProduct(checked));
   }, [checked]);
 
-  const handleChange = (id: string) => {
+  const handleChange = (id: number) => {
     const isChecked = checked.includes(id);
     setChecked((prev) => {
       if (isChecked) {
