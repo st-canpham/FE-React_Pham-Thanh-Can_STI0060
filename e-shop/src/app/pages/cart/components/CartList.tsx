@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { RootState } from '../../../store';
+import { RootState } from '../../../app.store';
 import CartItem from './CartItem';
 import ICartItem from '../../../shared/interfaces/cart-interface';
 import { convertToFixed } from '../../../shared/common';

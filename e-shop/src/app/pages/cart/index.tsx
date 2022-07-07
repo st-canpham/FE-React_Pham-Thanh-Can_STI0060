@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { RootState } from '../../store';
+import { RootState } from '../../app.store';
 import CartEmpty from './components/CartEmpty';
 import CartList from './components/CartList';
 

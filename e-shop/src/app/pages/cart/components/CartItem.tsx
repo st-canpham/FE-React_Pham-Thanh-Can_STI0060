@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { convertToFixed, getProductById } from '../../../shared/common';
 import Button from '../../../shared/components/partials/Button';
-import { RootState } from '../../../store';
+import { RootState } from '../../../app.store';
 import { updateInscreaseCart, updateDescreaseCart, removeCart } from '../cart.actions';
 
 interface Props {

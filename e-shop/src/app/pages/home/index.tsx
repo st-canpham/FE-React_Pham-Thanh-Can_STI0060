@@ -6,7 +6,7 @@ import SectionProducts from './components/section-products';
 import Benefit from './components/benefit';
 import Subcribe from './components/subcribe';
 import LoadingSpinner from '../../shared/components/partials/LoadingSpinner';
-import { RootState } from '../../store';
+import { RootState } from '../../app.store';
 
 const Home: React.FC = () => {
   const { isLoading, productList, categoriesChecked } = useSelector((state: RootState) => state.home);

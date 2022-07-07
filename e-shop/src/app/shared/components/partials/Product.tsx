@@ -4,7 +4,7 @@ import ICartItem from '../../interfaces/cart-interface';
 import { calcDiscountPrice, convertToFixed } from '../../common';
 import Button from '../../components/partials/Button';
 import { addCart, updateInscreaseCart } from '../../../pages/cart/cart.actions';
-import { RootState } from '../../../store';
+import { RootState } from '../../../app.store';
  
 interface Props {
   image: string,
