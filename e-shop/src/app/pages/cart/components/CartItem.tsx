@@ -1,9 +1,9 @@
 import React from 'react';
-import useGlobalContext from '../../../shared/context';
-import { setStorage } from '../../../shared/helper/data';
-import keyList from '../../../shared/constants/keyList';
+import { useDispatch, useSelector } from 'react-redux';
 import { convertToFixed, getProductById } from '../../../shared/common';
 import Button from '../../../shared/components/partials/Button';
+import { RootState } from '../../../store';
+import { updateInscreaseCart, updateDescreaseCart, removeCart } from '../cart.actions';
 
 interface Props {
   id: number;
@@ -13,29 +13,20 @@ interface Props {
 };
 
 const CartItem: React.FC<Props> = ({id, quantity, price, index}) => {
-  const {setCart} = useGlobalContext();
-  const productItem = getProductById(id);
+  const dispatch = useDispatch();
+  const { productList } = useSelector((state: RootState) => state.home);
+  const productItem = getProductById(id, productList);
 
-  const updateCartItem = (value: number) => {
-    setCart(cartPrev => {
-      const cartNew = [...cartPrev];
-      const cartItem = cartNew[index];
-      cartItem.quantity += value;
-      if (cartItem.quantity <= 0) {
-        removeCartItem();
-      }
-      setStorage(keyList.cartList, cartNew);
-      return cartNew;
-    })
+  const updateQuantityCartItem = (action: string) => {
+    switch(action) {
+      case 'inscrease': dispatch(updateInscreaseCart(id)); break;
+      case 'descrease': dispatch(updateDescreaseCart(id)); break;
+      default: throw new Error('Invalid action');
+    }
   };
 
   const removeCartItem = () => {
-    setCart(cartPrev => {
-      const cartNew = [...cartPrev];
-      cartNew.splice(index, 1);
-      setStorage(keyList.cartList, cartNew);
-      return cartNew;
-    })
+    dispatch(removeCart(id));
   };
   
   if (productItem) {
@@ -43,9 +34,9 @@ const CartItem: React.FC<Props> = ({id, quantity, price, index}) => {
       <>
         <div className="cart-item-left">
           <div className="cart-img">
-            <img src={productItem.thumbnail} alt={productItem.name} />
+            <img src={productItem.image} alt={productItem.name} />
           </div>
-          {productItem.discount > 0 && <div className="badge badge-primary">{`${productItem.discount*100}%`} </div>}
+          {productItem.discount > 0 && <div className="badge badge-primary">{`${productItem.discount}%`} </div>}
           <div className="cart-info">
             <div className="cart-info-top">
               <h4 className="cart-name">{productItem.name}</h4>
@@ -61,9 +52,9 @@ const CartItem: React.FC<Props> = ({id, quantity, price, index}) => {
         </div>
         <div className="cart-option">
           <div className="quantity">
-            <Button onClick={() => updateCartItem(-1)}>-</Button>
+            <Button onClick={() => updateQuantityCartItem('descrease')}>-</Button>
             <input type="number" disabled min="0" value={quantity}/>
-            <Button onClick={() => updateCartItem(1)}>+</Button>
+            <Button onClick={() => updateQuantityCartItem('inscrease')}>+</Button>
           </div>
           <Button className="btn remove-btn" onClick={removeCartItem}>Remove</Button>
         </div>

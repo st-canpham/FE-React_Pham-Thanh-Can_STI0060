@@ -1,7 +1,7 @@
-import {useState, createContext, useEffect} from 'react'; 
+import { useState, createContext, useEffect } from 'react'; 
 import ICartItem from '../interfaces/cart-interface';
-import {getStorage} from '../helper/data';
-import keyList from '../constants/keyList';
+import { getStorage } from '../helper/data';
+import { storageKeys } from '../constants/storage-keys';
 
 interface IContext {
   cart: ICartItem[];
@@ -27,7 +27,7 @@ const ContextProvider: React.FC<Props> = ({children}) => {
   const [cart, setCart] = useState<ICartItem[]>([]);
   const [user, setUser] = useState('');
   useEffect(() => {
-    const cartData: ICartItem[] = getStorage(keyList.cartList) || [];
+    const cartData: ICartItem[] = getStorage(storageKeys.cartList) || [];
     setCart(cartData);
   }, []);
 
