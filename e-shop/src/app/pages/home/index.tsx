@@ -9,7 +9,7 @@ import LoadingSpinner from '../../shared/components/partials/LoadingSpinner';
 import { RootState } from '../../app.store';
 
 const Home: React.FC = () => {
-  const { isLoading, productList, categoriesChecked } = useSelector((state: RootState) => state.home);
+  const { isLoading, productList, categories, categoriesChecked } = useSelector((state: RootState) => state.home);
 
   useEffect(() => {
     window.scrollTo(0, 0);

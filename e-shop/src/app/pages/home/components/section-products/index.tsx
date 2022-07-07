@@ -11,12 +11,9 @@ interface Props {
 };
 
 const SectionProducts: React.FC<Props> = ({productData, title, action, categoriesChecked}) => {
-  const categories = [
-    {id: "1", name:"JUMPSUITS"},
-    {id: "2", name:"SHIRT"},
-    {id: "3", name:"TROUSER"},
-    {id: "4", name:"JEANS"}
-  ];
+
+  const { categories } = useSelector((state: any) => state.home);
+
   return (
     <section className="section-for-you page-section">
       <div className="container">

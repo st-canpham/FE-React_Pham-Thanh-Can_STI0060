@@ -7,7 +7,7 @@ import Home from './pages/home';
 import Cart from './pages/cart';
 import Register from './pages/register';
 import ScrollToTop from './shared/components/partials/ScrollToTop';
-import { getProducts } from './pages/home/home.actions';
+import { getProducts, getCategories } from './pages/home/home.actions';
 
 const App: React.FC = () => {
   
@@ -15,6 +15,7 @@ const App: React.FC = () => {
 
   useEffect(() => {
     dispatch<any>(getProducts());
+    dispatch<any>(getCategories());
   }, []);
 
   return (
