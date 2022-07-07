@@ -14,8 +14,9 @@ interface Props {
 
 const CartItem: React.FC<Props> = ({id, quantity, price, index}) => {
   const dispatch = useDispatch();
-  const { productList } = useSelector((state: RootState) => state.product);
+  const { productList } = useSelector((state: RootState) => state.home);
   const productItem = getProductById(id, productList);
+
   const updateQuantityCartItem = (action: string) => {
     switch(action) {
       case 'inscrease': dispatch(updateInscreaseCart(id)); break;

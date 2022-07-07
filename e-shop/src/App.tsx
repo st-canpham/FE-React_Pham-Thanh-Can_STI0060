@@ -8,7 +8,7 @@ import Home from './app/pages/home';
 import Cart from './app/pages/cart';
 import Register from './app/pages/register';
 import ScrollToTop from './app/shared/components/partials/ScrollToTop';
-import { getProducts } from './app/pages/home/product.actions';
+import { getProducts } from './app/pages/home/home.actions';
 
 const App: React.FC = () => {
   const dispatch = useDispatch();

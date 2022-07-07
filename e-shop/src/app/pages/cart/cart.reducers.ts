@@ -24,10 +24,12 @@ const cartReducer = (state = initState, action: interfaceAction) => {
         cart: [...action.payload]
       }
     }
+
     case TYPES.ADD_CART: return {
       ...state,
       cart: [...state.cart, action.payload]
     }
+
     case TYPES.INSCREASE_CART: {
       const cartNew = [...state.cart];
       const index = cartNew.findIndex(cartItem => cartItem.id === action.payload);
@@ -38,6 +40,7 @@ const cartReducer = (state = initState, action: interfaceAction) => {
         cart: [...cartNew]
       }
     }
+
     case TYPES.DESCREASE_CART: {
       const cartNew = [...state.cart];
       const index = cartNew.findIndex(cartItem => cartItem.id === action.payload);
@@ -51,6 +54,7 @@ const cartReducer = (state = initState, action: interfaceAction) => {
         cart: [...cartNew]
       }
     }
+    
     case TYPES.REMOVE_CART: {
       const cartNew = [...state.cart];
       const index = cartNew.findIndex(cartItem => cartItem.id === action.payload);
