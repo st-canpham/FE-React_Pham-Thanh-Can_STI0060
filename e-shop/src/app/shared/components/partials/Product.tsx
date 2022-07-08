@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import ICartItem from '../../interfaces/cart-interface';
 import { calcDiscountPrice, convertToFixed } from '../../common';
 import Button from '../../components/partials/Button';
-import { addCart, updateInscreaseCart } from '../../../pages/cart/cart.actions';
+import { addCart, updateCart } from '../../../pages/cart/cart.actions';
 import { RootState } from '../../../app.store';
  
 interface Props {
@@ -24,7 +24,7 @@ const Product: React.FC<Props> = ({image, price, name, discount, id, category}) 
     const cartNew = [...cart];
     const cartItem = cartNew.find((item: ICartItem) => item.id === id);
     if (cartItem) {
-      dispatch(updateInscreaseCart(id));
+      dispatch(updateCart(id, 'inscrease'));
     }
     else {
       const value = {

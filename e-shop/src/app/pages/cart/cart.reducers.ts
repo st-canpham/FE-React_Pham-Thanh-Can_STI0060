@@ -30,22 +30,16 @@ const cartReducer = (state = initState, action: interfaceAction) => {
       cart: [...state.cart, action.payload]
     }
 
-    case TYPES.INSCREASE_CART: {
+    case TYPES.UPDATE_CART: {
       const cartNew = [...state.cart];
-      const index = cartNew.findIndex(cartItem => cartItem.id === action.payload);
-      cartNew[index].quantity += 1;
-      setStorage(storageKeys.cartList, cartNew);
-      return {
-        ...state,
-        cart: [...cartNew]
+      const index = cartNew.findIndex(cartItem => cartItem.id === action.payload.id);
+      if (action.payload.message === 'inscrease') {
+        cartNew[index].quantity += 1;
       }
-    }
-
-    case TYPES.DESCREASE_CART: {
-      const cartNew = [...state.cart];
-      const index = cartNew.findIndex(cartItem => cartItem.id === action.payload);
-      cartNew[index].quantity -= 1;
-      if(cartNew[index].quantity <= 0) {
+      if (action.payload.message === 'descrease') {
+        cartNew[index].quantity -= 1;
+      }
+      if (cartNew[index].quantity <= 0) {
         cartNew.splice(index, 1);
       }
       setStorage(storageKeys.cartList, cartNew);

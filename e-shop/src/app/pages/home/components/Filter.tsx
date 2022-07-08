@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { useSearchParams, useLocation } from 'react-router-dom';
 import ICategory from '../../../shared/interfaces/category-interface';
 
 interface Props {
@@ -12,10 +12,11 @@ const Filter: React.FC<Props> = ({ categories, setChecked, checked }) => {
   const QUERY_PARAMATER = 'QueryParameter';
   const [currentQueryParameters, setSearchParams] = useSearchParams();
 	const newQueryParameters : URLSearchParams = new URLSearchParams();
+  const location = useLocation();
   useEffect(() => {
     if (currentQueryParameters.get(QUERY_PARAMATER)) {
-      setChecked(currentQueryParameters.get(QUERY_PARAMATER)?.split(' '));
-    };
+      setChecked(currentQueryParameters.get(QUERY_PARAMATER)?.split(','));
+    }
   }, []);
 
   const handleChange = (e: any) => {
@@ -27,8 +28,12 @@ const Filter: React.FC<Props> = ({ categories, setChecked, checked }) => {
     } else {
       checkedNew.push(value);
     }
+    if(checkedNew.length === 0) {
+      currentQueryParameters.delete(QUERY_PARAMATER);
+      setSearchParams(currentQueryParameters);
+    }
     setChecked(checkedNew);
-    newQueryParameters.set(QUERY_PARAMATER, checkedNew.join(' '));
+    newQueryParameters.set(QUERY_PARAMATER, checkedNew.join(','));
     setSearchParams(newQueryParameters);
   };
 
