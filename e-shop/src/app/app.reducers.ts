@@ -1,10 +1,12 @@
 import { combineReducers } from 'redux'
 import cartReducer from './pages/cart/cart.reducers';
-import home from './pages/home/home.reducers';
+import homeReducer from './pages/home/home.reducers';
+import registerReducer from './pages/register/register.reducers';
 
 const reducers = {
   cart: cartReducer,
-  home: home
+  home: homeReducer,
+  register: registerReducer
 };
 
 const appReducer = combineReducers({ ...reducers });

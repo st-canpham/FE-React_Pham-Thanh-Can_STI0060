@@ -8,8 +8,10 @@ import {ReactComponent as UserIcon} from '../../../assets/icons/user.svg';
 import { RootState } from '../../../app.store';
 
 const Header: React.FC= () => {
-  const { cart } = useSelector((state: RootState) => state.cart)
+  const { cart } = useSelector((state: RootState) => state.cart);
+  const { user } = useSelector((state: RootState) => state.register);
   const quantityCart = cart.reduce((total, item) => total + item.quantity, 0);
+  
   return (
     <header>
       <div className="container">
@@ -32,7 +34,7 @@ const Header: React.FC= () => {
               </li>
             </ul>
           </nav>
-          {/* {user && <span style={{color: 'red'}}>{user}</span>} */}
+          {user && <span style={{color: 'red'}}>{user}</span>}
           <ul className="actions-list">
             <li className="action-item">
               <button className="btn btn-icon-sm">
