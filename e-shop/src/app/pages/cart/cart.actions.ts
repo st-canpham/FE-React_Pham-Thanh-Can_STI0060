@@ -15,17 +15,10 @@ export const addCart = (data: ICartItem) => {
   }
 };
 
-export const updateInscreaseCart = (id: number) => {
+export const updateCart = (id: number, message: string) => {
   return {
-    type: TYPES.INSCREASE_CART,
-    payload: id
-  }
-};
-
-export const updateDescreaseCart = (id: number) => {
-  return {
-    type: TYPES.DESCREASE_CART,
-    payload: id
+    type: TYPES.UPDATE_CART,
+    payload: {id, message}
   }
 };
 

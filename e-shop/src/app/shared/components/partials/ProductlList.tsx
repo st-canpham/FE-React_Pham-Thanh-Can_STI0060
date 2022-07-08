@@ -4,20 +4,19 @@ import IProduct from '../../interfaces/product-interface';
 
 interface IProductList {
   productList: IProduct[];
-  categoriesChecked?: string[];
+  checked: string[]
 };
 
-const ProductList: React.FC<IProductList> = ({productList, categoriesChecked}) => {
+const ProductList: React.FC<IProductList> = ({productList, checked}) => {
   let productsChecked: IProduct[] = [];
-  if (categoriesChecked?.length !== 0) {
+  if (checked?.length !== 0) {
     productsChecked = productList.filter(item => {
-      if(categoriesChecked?.includes(item.category)) {
+      if(checked?.includes(item.category)) {
         return item;
       }
     })
   }
   const productsCurrent = productsChecked.length ? productsChecked : productList;
-  
   return (
     <ul className="products-list row js-products-list">
       {productsCurrent.map((product: IProduct)=> (

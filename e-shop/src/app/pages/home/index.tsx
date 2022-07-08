@@ -1,19 +1,23 @@
 import React, { useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Banner from './components/banner';
 import Category from './components/categories';
 import SectionProducts from './components/section-products';
 import Benefit from './components/benefit';
 import Subcribe from './components/subcribe';
 import LoadingSpinner from '../../shared/components/partials/LoadingSpinner';
-import { RootState } from '../../store';
+import { RootState } from '../../app.store';
+import { getProducts, getCategories } from '../../pages/home/home.actions';
+
 
 const Home: React.FC = () => {
-  const { isLoading, productList, categoriesChecked } = useSelector((state: RootState) => state.home);
-
+  const { isLoading, productList } = useSelector((state: RootState) => state.home);
+  const dispatch = useDispatch();
+  
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [isLoading]);
+    dispatch<any>(getProducts());
+    dispatch<any>(getCategories());
+  }, []);
 
   return isLoading ? (<LoadingSpinner />) : (
     <main>
@@ -21,7 +25,6 @@ const Home: React.FC = () => {
       <Category />
       <SectionProducts 
         productData={productList} 
-        categoriesChecked={categoriesChecked}
         title="Selected just for you"
         action="SHOW MORE"
       />

@@ -1,31 +1,40 @@
-import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { filterProduct } from '../home.actions';
+import React, { useEffect } from 'react';
+import { useSearchParams, useLocation } from 'react-router-dom';
 import ICategory from '../../../shared/interfaces/category-interface';
 
 interface Props {
   categories: ICategory[];
+  setChecked: any;
+  checked: any;
 };
 
-const Filter: React.FC<Props> = ({ categories }) => {
+const Filter: React.FC<Props> = ({ categories, setChecked, checked }) => {
+  const QUERY_PARAMATER = 'QueryParameter';
+  const [currentQueryParameters, setSearchParams] = useSearchParams();
+	const newQueryParameters : URLSearchParams = new URLSearchParams();
   const location = useLocation();
-  const dispatch = useDispatch();
-  const [path, setPath] = useState(location.pathname);
-  const [checked, setChecked] = useState<string[]>([]);
   useEffect(() => {
-    dispatch(filterProduct(checked));
-  }, [checked]);
+    if (currentQueryParameters.get(QUERY_PARAMATER)) {
+      setChecked(currentQueryParameters.get(QUERY_PARAMATER)?.split(','));
+    }
+  }, []);
 
-  const handleChange = (id: string) => {
-    const isChecked = checked.includes(id);
-    setChecked((prev) => {
-      if (isChecked) {
-        return checked.filter(item => item !== id);
-      } else {
-        return [...prev, id];
-      }
-    });
+  const handleChange = (e: any) => {
+    const value = e.target.value;
+    const checkedNew = [...checked];
+    const index = checkedNew.findIndex(item => item === value);
+    if(index !== -1) {
+      checkedNew.splice(index, 1);
+    } else {
+      checkedNew.push(value);
+    }
+    if(checkedNew.length === 0) {
+      currentQueryParameters.delete(QUERY_PARAMATER);
+      setSearchParams(currentQueryParameters);
+    }
+    setChecked(checkedNew);
+    newQueryParameters.set(QUERY_PARAMATER, checkedNew.join(','));
+    setSearchParams(newQueryParameters);
   };
 
   return (
@@ -34,9 +43,10 @@ const Filter: React.FC<Props> = ({ categories }) => {
         <div key={category.id} className="form-group">
           <input 
             type="checkbox" 
-            checked = {checked.includes(category.id)}
+            checked = {checked.includes(category.id.toString())}
             id={`${category.id}`} 
-            onChange={() => handleChange(category.id)}/>
+            value={category.id}
+            onChange={handleChange}/>
           <label htmlFor={`${category.id}`}>{category.name}</label>
         </div>
       ))}

@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import ProductList from '../../../../shared/components/partials/ProductlList';
 import IProduct from '../../../../shared/interfaces/product-interface';
@@ -7,16 +8,13 @@ interface Props {
   productData: IProduct[];
   title: string;
   action?: string;
-  categoriesChecked?: string[];
 };
 
-const SectionProducts: React.FC<Props> = ({productData, title, action, categoriesChecked}) => {
-  const categories = [
-    {id: "1", name:"JUMPSUITS"},
-    {id: "2", name:"SHIRT"},
-    {id: "3", name:"TROUSER"},
-    {id: "4", name:"JEANS"}
-  ];
+const SectionProducts: React.FC<Props> = ({productData, title, action}) => {
+
+  const { categories } = useSelector((state: any) => state.home);
+  const [checked, setChecked] = useState<any>([]);
+
   return (
     <section className="section-for-you page-section">
       <div className="container">
@@ -24,8 +22,8 @@ const SectionProducts: React.FC<Props> = ({productData, title, action, categorie
           <h3 className={`section-title ${!action && 'text-center'}`}>{title}</h3>
           {action && <button className="btn btn-outline-secondary">{action}</button>}
         </div>
-        <Filter categories={categories}/>
-        <ProductList productList={productData} categoriesChecked={categoriesChecked}/>
+        <Filter categories={categories} checked={checked} setChecked={setChecked}/>
+        <ProductList productList={productData} checked={checked}/>
       </div>
     </section>
   )

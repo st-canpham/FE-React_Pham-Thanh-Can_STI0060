@@ -3,26 +3,28 @@ import { useDispatch, useSelector } from 'react-redux';
 import ICartItem from '../../interfaces/cart-interface';
 import { calcDiscountPrice, convertToFixed } from '../../common';
 import Button from '../../components/partials/Button';
-import { addCart, updateInscreaseCart } from '../../../pages/cart/cart.actions';
-import { RootState } from '../../../store';
+import { addCart, updateCart } from '../../../pages/cart/cart.actions';
+import { RootState } from '../../../app.store';
  
 interface Props {
   image: string,
   price: number,
   name: string,
   discount: number,
-  id: number
+  id: number,
+  category: string
 };
 
-const Product: React.FC<Props> = ({image, price, name, discount, id}) => {
+const Product: React.FC<Props> = ({image, price, name, discount, id, category}) => {
   const dispatch = useDispatch();
   const { cart } = useSelector((state: RootState) => state.cart);
+  const { categories } = useSelector((state: RootState) => state.home);
   const discountPrice = convertToFixed(calcDiscountPrice(price, discount), 2);
   const addToCart = () => {
     const cartNew = [...cart];
     const cartItem = cartNew.find((item: ICartItem) => item.id === id);
     if (cartItem) {
-      dispatch(updateInscreaseCart(id));
+      dispatch(updateCart(id, 'inscrease'));
     }
     else {
       const value = {
@@ -41,6 +43,11 @@ const Product: React.FC<Props> = ({image, price, name, discount, id}) => {
       </div>
       {discount > 0 && <span className="badge badge-primary badge-top-left">{`${discount}%`}</span>}
       <div className="product-info">
+        <h3>{categories.map((item: any) =>  {
+          if (item.id.toString() === category) {
+            return item.name;
+          }
+        })}</h3>
         <h4 className="product-name">{name}</h4>
         <div className="product-price">
           {discount > 0 && <p className="price-discount">{discountPrice}</p>}

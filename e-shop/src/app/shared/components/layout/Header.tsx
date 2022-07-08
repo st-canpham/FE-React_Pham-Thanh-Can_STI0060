@@ -5,11 +5,13 @@ import {ReactComponent as LogoIcon} from '../../../assets/icons/logo.svg';
 import {ReactComponent as SearchIcon} from '../../../assets/icons/search.svg';
 import {ReactComponent as CartIcon} from '../../../assets/icons/cart.svg';
 import {ReactComponent as UserIcon} from '../../../assets/icons/user.svg';
-import { RootState } from '../../../store';
+import { RootState } from '../../../app.store';
 
 const Header: React.FC= () => {
-  const { cart } = useSelector((state: RootState) => state.cart)
+  const { cart } = useSelector((state: RootState) => state.cart);
+  const { user } = useSelector((state: RootState) => state.register);
   const quantityCart = cart.reduce((total, item) => total + item.quantity, 0);
+  
   return (
     <header>
       <div className="container">
@@ -32,7 +34,7 @@ const Header: React.FC= () => {
               </li>
             </ul>
           </nav>
-          {/* {user && <span style={{color: 'red'}}>{user}</span>} */}
+          {user && <span style={{color: 'red'}}>{user}</span>}
           <ul className="actions-list">
             <li className="action-item">
               <button className="btn btn-icon-sm">

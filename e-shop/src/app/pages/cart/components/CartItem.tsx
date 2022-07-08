@@ -2,8 +2,8 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { convertToFixed, getProductById } from '../../../shared/common';
 import Button from '../../../shared/components/partials/Button';
-import { RootState } from '../../../store';
-import { updateInscreaseCart, updateDescreaseCart, removeCart } from '../cart.actions';
+import { RootState } from '../../../app.store';
+import { removeCart, updateCart } from '../cart.actions';
 
 interface Props {
   id: number;
@@ -17,12 +17,8 @@ const CartItem: React.FC<Props> = ({id, quantity, price, index}) => {
   const { productList } = useSelector((state: RootState) => state.home);
   const productItem = getProductById(id, productList);
 
-  const updateQuantityCartItem = (action: string) => {
-    switch(action) {
-      case 'inscrease': dispatch(updateInscreaseCart(id)); break;
-      case 'descrease': dispatch(updateDescreaseCart(id)); break;
-      default: throw new Error('Invalid action');
-    }
+  const updateQuantityCart = (message: string) => {
+    dispatch(updateCart(id, message));
   };
 
   const removeCartItem = () => {
@@ -52,9 +48,9 @@ const CartItem: React.FC<Props> = ({id, quantity, price, index}) => {
         </div>
         <div className="cart-option">
           <div className="quantity">
-            <Button onClick={() => updateQuantityCartItem('descrease')}>-</Button>
+            <Button onClick={() => updateQuantityCart('descrease')}>-</Button>
             <input type="number" disabled min="0" value={quantity}/>
-            <Button onClick={() => updateQuantityCartItem('inscrease')}>+</Button>
+            <Button onClick={() => updateQuantityCart('inscrease')}>+</Button>
           </div>
           <Button className="btn remove-btn" onClick={removeCartItem}>Remove</Button>
         </div>
